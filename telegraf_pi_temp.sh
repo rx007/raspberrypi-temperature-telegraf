@@ -2,6 +2,8 @@
 prefix="temp="
 suffix="'C"
 gpu=$(/opt/vc/bin/vcgencmd measure_temp)
+cpu=$(</sys/class/thermal/thermal_zone0/temp)
 gpu_temp=${gpu#$prefix}
 gpu_temp=${gpu_temp%$suffix}
-echo -e "{\"cpu\":"$(</sys/class/thermal/thermal_zone0/temp)", \"gpu\":$gpu_temp}"
+cpu_temp=$((cpu/1000))
+echo -e "{\"cpu\":"$cpu_temp", \"gpu\":$gpu_temp}"
